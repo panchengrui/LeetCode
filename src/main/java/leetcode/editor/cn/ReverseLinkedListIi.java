@@ -22,7 +22,7 @@ public class ReverseLinkedListIi {
                 return reverseN(head, right);
             }
             ListNode pre = head;
-            for (int i = 1; i < right - 1; i++) {
+            for (int i = 1; i < left - 1; i++) {
                 pre = pre.next;
             }
             pre.next = reverseN(pre.next, right - left + 1);
@@ -30,7 +30,7 @@ public class ReverseLinkedListIi {
         }
     }
 
-    private ListNode reverseN(ListNode head, int n) {
+    public ListNode reverseN(ListNode head, int n) {
         if (head == null || head.next == null) {
             return head;
         }
