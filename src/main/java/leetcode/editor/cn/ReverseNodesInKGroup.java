@@ -3,7 +3,7 @@ package leetcode.editor.cn;
 import java.util.*;
 import leetcode.editor.common.*;
 
-public class ReverseLinkedListIi {
+public class ReverseNodesInKGroup {
 
     //leetcode submit region begin(Prohibit modification and deletion)
 
@@ -18,26 +18,28 @@ public class ReverseLinkedListIi {
      * }
      */
     class Solution {
-        public ListNode reverseBetween(ListNode head, int left, int right) {
-            //思路：首先基于反转一个链表的前n个链表的算法思路
-            //在此基础上就是先找到需要反转的链表的开始节点的前一个节点
-            //把前一个节点的后继指向反转以后的链表的头结点
+        public ListNode reverseKGroup(ListNode head, int k) {
+            if (head == null) {return null;}
+            // 区间 [a, b) 包含 k 个待反转元素
+            ListNode a, b;
+            a = b = head;
+            for (int i = 0; i < k; i++) {
+                // 不足 k 个，不需要反转了
+                if (b == null) {return head;}
+                b = b.next;
+            }
+            // 反转前 k 个元素
+            ListNode newHead = reverseN(a, k);
+            // 此时 b 指向下一组待反转的头结点
+            // 递归反转后续链表并连接起来
+            a.next = reverseKGroup(b, k);
+            return newHead;
 
-            if (left == 1) {
-                return reverseN(head, right);
-            }
-            //先找到left节点的前一个节点
-            ListNode pre = head;
-            for (int i = 1; i < left - 1; i++) {
-                pre = pre.next;
-            }
-            //从第left对应的那个节点开始反转链表
-            pre.next = reverseN(pre.next, right - left + 1);
-            return head;
         }
 
         /**
          * 这个方法是反转一个单链表的前n个节点
+         *
          * @param head
          * @param n
          * @return
@@ -62,11 +64,8 @@ public class ReverseLinkedListIi {
     //leetcode submit region end(Prohibit modification and deletion)
 
     public static void main(String[] args) {
-        Solution solution = new ReverseLinkedListIi().new Solution();
+        Solution solution = new ReverseNodesInKGroup().new Solution();
         // put your test code here
 
-        ListNode head = ListNode.createHead(new int[] {1, 2, 3, 4, 5});
-        ListNode listNode = solution.reverseBetween(head, 2, 4);
-        System.out.println(listNode);
     }
 }
