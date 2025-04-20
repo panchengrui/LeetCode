@@ -19,6 +19,10 @@ public class ReverseNodesInKGroup {
      */
     class Solution {
         public ListNode reverseKGroup(ListNode head, int k) {
+            //思路：算法基础是依赖链表前n个节点反转的方法
+            //主要是需要增加根据是否足够k个节点进行反转的判断逻辑，
+            //以及需要进行递归反转后的链接逻辑
+
             if (head == null) {return null;}
             // 区间 [a, b) 包含 k 个待反转元素
             ListNode a, b;
@@ -28,9 +32,11 @@ public class ReverseNodesInKGroup {
                 if (b == null) {return head;}
                 b = b.next;
             }
-            // 反转前 k 个元素
+            //反转前 k 个元素，newHead在第一次进行反转后这个节点就确定了，
+            //就是第一个进行反转的那个链表的头结点
+            //并不会在后续迭代中改变，
             ListNode newHead = reverseN(a, k);
-            // 此时 b 指向下一组待反转的头结点
+            // 此时 b 指向下一组待反转的头结点，a则是当前链表的尾节点
             // 递归反转后续链表并连接起来
             a.next = reverseKGroup(b, k);
             return newHead;
