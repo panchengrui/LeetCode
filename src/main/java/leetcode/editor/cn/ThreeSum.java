@@ -44,7 +44,7 @@ public class ThreeSum {
                 } else if (sum > target) {
                     hi--;
                 } else {
-                    res.add(new ArrayList<>() {{
+                    res.add(new ArrayList<Integer>() {{
                         add(left);
                         add(right);
                     }});
